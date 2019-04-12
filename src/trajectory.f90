@@ -280,8 +280,19 @@ contains
                 &index group with read() or read_next().")
         end if
 
-        atom_tmp = merge(this%ndx%get(group, atom), atom, present(group))
-        natoms = merge(this%natoms(group), this%natoms(), present(group))
+        if(present(group)) then
+           atom_tmp = this%ndx%get(group, atom)
+        else
+           atom_tmp = atom
+        end if
+           !atom_tmp = merge(this%ndx%get(group, atom), atom, present(group))
+
+        if(present(group)) then
+           natoms = this%natoms(group)
+        else
+           natoms = this%natoms()
+        end if
+        !natoms = merge(this%natoms(group), this%natoms(), present(group))
 
         if (atom > natoms .or. atom < 1) then
             write(message, "(a,i0,a,i0,a)") "Tried to access atom number ", atom_tmp, " when there are ", &
@@ -304,7 +315,7 @@ contains
             call error_stop_program("Do not specify an index group in natoms() when already specifying an & 
                 &index group with read() or read_next().")
         end if
-
+        
         trajectory_get_natoms = merge(this%ndx%get_natoms(group), this%NUMATOMS, present(group))
 
     end function trajectory_get_natoms
