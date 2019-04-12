@@ -21,6 +21,12 @@
 cmake_minimum_required ( VERSION 2.8.8 )
 enable_language ( Fortran )
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+   cmake_policy(SET CMP0042 NEW)
+endif()
+
+
+
 list ( APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
 project ( gmxfort NONE )
